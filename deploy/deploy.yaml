@@ -37,5 +37,10 @@ spec:
               secretKeyRef:
                 name: registry-secret
                 key: password
+          - name: REGISTRY
+            valueFrom:
+              secretKeyRef:
+                name: registry-secret
+                key: registry
         ports:
         - containerPort: 8080

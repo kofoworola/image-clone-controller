@@ -38,7 +38,6 @@ var (
 )
 
 func init() {
-	flag.StringVar(&registry, "registry", "kofoworola", "what registry will be used to make backups without the forward slash")
 	flag.StringVar(
 		&skipNamespaces,
 		"ignore-namespaces",
@@ -52,6 +51,12 @@ func main() {
 	// add list of namespaces to ignore
 	if skipNamespaces != "" {
 		ignoreNs = append(ignoreNs, strings.Split(skipNamespaces, ",")...)
+	}
+
+	// get env vars
+	registry = os.Getenv("REGISTRY")
+	if registry == "" {
+		registry = "kofoworola"
 	}
 
 	// verify username and password were passed
