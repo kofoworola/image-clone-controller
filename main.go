@@ -45,9 +45,6 @@ func init() {
 		"",
 		"comma separated list of namespaces to ignore. NOTE `kube-system` namesapces will always be ignored",
 	)
-	flag.StringVar(&username, "username", "kofoworola", "registry username")
-	flag.StringVar(&password, "password", "", "registry password")
-
 	log.SetLogger(zap.New())
 }
 func main() {
@@ -55,6 +52,18 @@ func main() {
 	// add list of namespaces to ignore
 	if skipNamespaces != "" {
 		ignoreNs = append(ignoreNs, strings.Split(skipNamespaces, ",")...)
+	}
+
+	// verify username and password were passed
+	username = os.Getenv("REGISTRYUSERNAME")
+	if username == "" {
+		fmt.Println("REGISTRYUSERNAME env variable can not be empty")
+		os.Exit(1)
+	}
+	password = os.Getenv("REGISTRYPASS")
+	if password == "" {
+		fmt.Println("REGISTRYPASS env variable can not be empty")
+		os.Exit(1)
 	}
 
 	logger := log.Log.WithName("image-clone-controller")

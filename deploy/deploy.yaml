@@ -24,6 +24,18 @@ spec:
       serviceAccountName: image-clone
       containers:
       - name: image-clone-controller
-        image: kofoworola/image-clone-controller:latest 
+        image: kofoworola/image-clone-controller:latest
+        imagePullPolicy: Always
+        env:
+          - name: REGISTRYUSERNAME
+            valueFrom:
+              secretKeyRef:
+                name: registry-secret
+                key: username
+          - name: REGISTRYPASS
+            valueFrom:
+              secretKeyRef:
+                name: registry-secret
+                key: password
         ports:
         - containerPort: 8080
