@@ -39,4 +39,4 @@ spec:
       - name: test-app
         image: alpine:latest
         command: ["/bin/sh"]
-        args: ["-c", "while true; do echo hello from daemon; sleep 10;done"]
+        args: ["-c", "while true; do echo hello from daemons; sleep 10;done"]
