@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: image-clone
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: image-clone-controller
+  namespace: image-clone
+  labels:
+    app: image-clone-controller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: image-clone-controller
+  template:
+    metadata:
+      labels:
+        app: image-clone-controller
+    spec:
+      serviceAccountName: image-clone
+      containers:
+      - name: image-clone-controller
+        image: kofoworola/image-clone-controller:latest 
+        ports:
+        - containerPort: 8080
