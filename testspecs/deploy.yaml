@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-deployment
+  labels:
+    app: test-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test-app
+  template:
+    metadata:
+      labels:
+        app: test-app
+    spec:
+      containers:
+      - name: alpine 
+        image: alpine:latest
+        command: ["/bin/sh"]
+        args: ["-c", "while true; do echo hello from deploy; sleep 10;done"] 
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: test-daemonset
+  labels:
+    app: test-app
+spec:
+  selector:
+    matchLabels:
+      name: test-app
+  template:
+    metadata:
+      labels:
+        name: test-app
+    spec:
+      containers:
+      - name: test-app
+        image: alpine:latest
+        command: ["/bin/sh"]
+        args: ["-c", "while true; do echo hello from daemon; sleep 10;done"]
